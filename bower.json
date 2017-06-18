@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "authors": [
+    "Marko Rajević"
+  ],
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "jquery": null,
+    "velocity": null,
+    "bootstrap": "v4.0.0-alpha.6",
+    "tether": null,
+    "jquery-validation": null,
+    "moment": null
+  }
+}

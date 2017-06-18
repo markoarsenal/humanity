@@ -1,0 +1,12 @@
+body {
+	min-width: 320px;
+	background-color: #eee;
+}
+a, a:hover, a:focus, a:active { text-decoration: none; }
+img { max-width: 100%; }
+input[type="radio"] { -webkit-appearance: radio; }
+.btn:active, .btn.active, .btn:focus, .btn.focus,
+.btn:active:focus, .btn:active.focus, .btn.active:focus, .btn.active.focus {
+	outline: none;
+	box-shadow: none;
+}

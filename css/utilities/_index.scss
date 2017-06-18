@@ -1,0 +1,124 @@
+@import "reset";
+
+// Mixins
+@mixin clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+// Mixins for positioning, if you want to exclude one of "top left bottom right"
+// just enter "no" instead
+@mixin position($position, $args) {
+	position: $position;
+	$offsets: top left bottom right;
+
+	@each $o in $offsets {
+		$value: nth($args, index($offsets, $o));
+
+		@if $value != "no" {
+			#{$o}: $value;
+		}
+	}
+}
+
+@mixin absolute($args) {
+	@include position(absolute, $args);
+}
+
+@mixin fixed($args) {
+	@include position(fixed, $args);
+}
+
+@mixin relative($args) {
+	@include position(relative, $args);
+}
+
+// Vertical align
+@mixin vertical-align {
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+// Absolute center
+@mixin absolute-center {
+	@include absolute(50% 50% no no);
+	transform: translate(-50%, -50%);
+}
+
+// Absolute center
+@mixin fixed-center {
+	@include fixed(50% 50% no no);
+	transform: translate(-50%, -50%);
+}
+
+// Helper classes
+.clear { clear: both; }
+.cursor-default { cursor: default !important; }
+.hide-element { display: none; }
+
+// Truncate text with ...
+.truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.wide-proportion-wrapper {
+	position: relative;
+	padding-top: 56.25%;
+	width: 100%;
+	height: 0;
+	overflow: hidden;
+}
+.bg-wide-proportion-wrapper {
+	@extend .wide-proportion-wrapper;
+	background-position: center;
+	background-size: cover;
+}
+
+// Z indexes
+$z-indexes: (
+	loader: 9999
+) !default;
+
+// Hover effect
+$hover-effect: 'darken' !default;
+$hover-effect-value: 10% !default;
+
+// Bootstrap vars
+$enable-flex: true;
+
+$container-max-widths: (
+	sm: 100%,
+	md: 100%,
+	lg: 1200px,
+	xl: 1440px
+) !default;
+
+// Breakpoints
+$breakpoint-desktop: 1441px !default;
+$breakpoint-laptop: 1200px !default;
+$breakpoint-tablet: 1024px !default;
+$breakpoint-mobile: 768px !default;
+$breakpoint-small: 480px !default;
+
+$breakpoint-desktop-min: 1439px !default;
+$breakpoint-laptop-min: 1199px !default;
+$breakpoint-tablet-min: 1023px !default;
+$breakpoint-mobile-min: 767px !default;
+$breakpoint-small-min: 479px !default;
+
+// Bootstrap breakpoints
+$grid-breakpoints: (
+	xs: 0,
+	sm: $breakpoint-mobile,
+	md: $breakpoint-tablet,
+	lg: $breakpoint-laptop,
+	xl: $breakpoint-desktop
+);
+
+// Themes
+$has-themes: false !default;
+$theme-colors: () !default;

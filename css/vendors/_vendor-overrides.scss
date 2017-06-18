@@ -1,0 +1,17 @@
+// Bootstrap
+button:focus { outline: none; }
+.btn-link:hover, .btn-link:focus { text-decoration: none; }
+.container { width: 100%; }
+.carousel-control {
+	width: auto;
+	padding: 20px;
+	top: 50%;
+	bottom: auto;
+	transform: translateY(-50%);
+	font-size: 40px;
+	&.left, &.right { background: none; }
+}
+
+@media (min-width: $breakpoint-desktop) {
+	.carousel-control { padding: 40px; font-size: 50px; }
+}
