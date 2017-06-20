@@ -6,10 +6,13 @@ var scripts = [
 	'./bower_components/jquery/dist/jquery.js',
 	'./bower_components/tether/dist/js/tether.js',
 	'./bower_components/bootstrap/dist/js/bootstrap.js',
-	'./bower_components/velocity/velocity.js',
+	'./bower_components/moment/moment.js',
+	'./bower_components/handlebars/handlebars.js',
 	'./scripts/utilities/utilities.js',
 	'./scripts/helpers/config.js',
 	'./scripts/helpers/helpers.js',
+	'./scripts/modules/firebase.js',
+	'./scripts/partials/table.js',
 	'./scripts/main.js'
 ];
 

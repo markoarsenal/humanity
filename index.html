@@ -6,11 +6,47 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Application</title>
+
+	<link rel="icon" href="data:image/png;base64,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" type="image/x-icon">
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&amp;subset=cyrillic-ext" rel="stylesheet">
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<h1>Hello there</h1>
+	<main class="main-container">
+		<div class="p-table js-table"></div>
+	</main>
 
+	<script class="js-table-template" type="text/x-handlebars-template">
+		<table class="table table-striped table-bordered table-sm">
+			<thead>
+				<tr>
+					<th>{{interval}}</th>
+					{{#each days}}
+					<th class="{{todayClass}}">{{date}}</th>
+					{{/each}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each employees}}
+				<tr>
+					<td><span class="icon-user user-icon"></span> {{this}}</td>
+					{{#each ../days}}
+					<td class="{{todayClass}}"></td>
+					{{/each}}
+				</tr>
+				{{/each}}
+				<tr>
+					<td colspan="8">
+						<button class="btn btn-primary btn-block btn-sm">Add new employee <span class="btn-icon icon-plus"></span></button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</script>
+
+	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-database.js"></script>
 	<script src="scripts/bundle.min.js"></script>
 </body>
 </html>

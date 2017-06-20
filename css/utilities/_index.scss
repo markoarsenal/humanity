@@ -78,37 +78,33 @@
 	background-size: cover;
 }
 
-// Z indexes
+// Colors
+$brand-primary: #41a3cc;
+
+// Z-indexes
 $z-indexes: (
 	loader: 9999
-) !default;
-
-// Hover effect
-$hover-effect: 'darken' !default;
-$hover-effect-value: 10% !default;
-
-// Bootstrap vars
-$enable-flex: true;
+);
 
 $container-max-widths: (
 	sm: 100%,
 	md: 100%,
 	lg: 1200px,
 	xl: 1440px
-) !default;
+);
 
 // Breakpoints
-$breakpoint-desktop: 1441px !default;
-$breakpoint-laptop: 1200px !default;
-$breakpoint-tablet: 1024px !default;
-$breakpoint-mobile: 768px !default;
-$breakpoint-small: 480px !default;
+$breakpoint-desktop: 1441px;
+$breakpoint-laptop: 1200px;
+$breakpoint-tablet: 1024px;
+$breakpoint-mobile: 768px;
+$breakpoint-small: 480px;
 
-$breakpoint-desktop-min: 1439px !default;
-$breakpoint-laptop-min: 1199px !default;
-$breakpoint-tablet-min: 1023px !default;
-$breakpoint-mobile-min: 767px !default;
-$breakpoint-small-min: 479px !default;
+$breakpoint-desktop-min: 1439px;
+$breakpoint-laptop-min: 1199px;
+$breakpoint-tablet-min: 1023px;
+$breakpoint-mobile-min: 767px;
+$breakpoint-small-min: 479px;
 
 // Bootstrap breakpoints
 $grid-breakpoints: (
@@ -118,7 +114,3 @@ $grid-breakpoints: (
 	lg: $breakpoint-laptop,
 	xl: $breakpoint-desktop
 );
-
-// Themes
-$has-themes: false !default;
-$theme-colors: () !default;

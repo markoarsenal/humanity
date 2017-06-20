@@ -1,0 +1,12 @@
+.p-table {
+	font-size: 14px;
+	th {
+		text-align: center;
+		color: #fff;
+		background-color: $brand-primary;
+	}
+	tr {
+		td.today-cell { background-color: rgba($brand-primary, 0.2); }
+		&:nth-of-type(odd) td.today-cell { background-color: rgba($brand-primary, 0.4); }
+	}
+}
