@@ -32,9 +32,12 @@ APP.table = (function () {
 				$template: $('.js-table-template'),
 			}
 
+			this.employeesClone = {};
+
 			// Get employees
 			this.getEmployees((employees) => {
 				this.state.employees = employees;
+				this.employeesClone = $.extend(true, {}, employees);
 				this.renderTable();
 			});
 
@@ -93,8 +96,7 @@ APP.table = (function () {
 		 */
 		_initEvents () {
 			let that = this,
-				filterTimeout,
-				employees = $.extend(true, {}, that.state.employees);
+				filterTimeout;
 
 			// Filter
 			that.DOM.$filter.on('keyup.ats cut.ats paste.ats', function (e) {
@@ -103,17 +105,17 @@ APP.table = (function () {
 
 				// Reset to original state
 				if (filter.length === 0) {
-					that.state.employees = employees;
+					that.state.employees = that.employeesClone;
 				}
 
-				// Filter 400ms after last letter is entered
+				// Filter 300ms after last letter is entered
 				clearTimeout(filterTimeout);
 
 				filterTimeout = setTimeout(function () {
 					that.state.employees = {};
 
-					for (i in employees) {
-						let employee = employees[i],
+					for (let i in that.employeesClone) {
+						let employee = that.employeesClone[i],
 							fn = employee.firstName.toLowerCase(),
 							ln = employee.lastName.toLowerCase();
 
@@ -123,7 +125,7 @@ APP.table = (function () {
 					}
 
 					that.renderTable();
-				}, 400);
+				}, 300);
 			});
 
 			// Pagination
@@ -166,8 +168,14 @@ APP.table = (function () {
 				// Get employees
 				that.getEmployees((employees) => {
 					that.state.employees = employees;
+					that.employeesClone = $.extend(true, {}, employees);
 					that.renderTable();
 				});
+			});
+
+			// Add shift
+			that.$element.on('click', '.js-table-cell-add', function () {
+				APP.shift.instance.showModal();
 			});
 		}
 	}

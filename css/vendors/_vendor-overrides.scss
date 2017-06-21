@@ -24,6 +24,65 @@ button:focus { outline: none; }
 	label { font-size: 14px; margin-bottom: 0; }
 }
 
+// Datetimepicker
+.dtp {
+	z-index: map-get($z-indexes, datepicker);
+	.dtp-content { max-width: 230px; }
+	.dtp-date-view {
+		background-color: #fff;
+		box-shadow: 0 2px 5px 0 rgba(#000, 0.16), 0 2px 10px 0 rgba(#000, 0.12);
+	}
+	.table thead th { border-bottom-width: 1px; font-size: 13px; }
+	table.dtp-picker-days tr:nth-child(2) > td { padding-top: 1px; }
+	> .dtp-content > .dtp-date-view > header.dtp-header { color: #fff; background-color: darken($brand-primary, 10%); }
+	.dtp-actual-day, .dtp-close { font-size: 13px; }
+	.dtp-close {
+		top: 0;
+		right: 0;
+		a { padding: 8px; }
+		a, i { display: block; } 
+	}
+	.material-icons { font-size: 20px; }
+	.p10 > a {
+		padding: 5px; 
+		margin-top: -5px;
+		&, i { display: block; }
+	}
+	.dtp-close > a, .p10 > a {
+		color: #fff;
+		transition: color 0.1s;
+		&:hover { color: #ddd; }
+	}
+	div.dtp-date > .dtp-actual-num { margin-bottom: 5px; }
+	div.dtp-date, div.dtp-time {
+		padding: 5px 3px 0 0;
+		color: #fff;
+		background-color: $brand-primary;
+	}
+	div.dtp-actual-num { font-size: 24px; } 
+	div.dtp-actual-month, div.dtp-actual-year { font-size: 14px; color: #fff; }
+	div.dtp-picker-month, div.dtp-actual-time { font-size: 14px; }
+	div.dtp-picker { padding: 5px 10px; }
+	div.dtp-picker-month, table.dtp-picker-days tr > th { color: #555; text-transform: uppercase; } 
+	div.dtp-picker-month { padding-bottom: 5px !important; }
+	table.dtp-picker-days {
+		min-height: initial;
+		tr > td { padding: 0; }
+	}
+	.table { width: 100%; }
+	table.dtp-picker-days tr > td > a, .dtp-picker-time > a {
+		display: block;
+		width: 30px;
+		height: 30px;
+		padding: 0;
+		line-height: 30px;
+		transition: all 0.1s;
+		&:hover { background-color: #ddd; }
+		&.selected { background-color: $brand-primary; }
+	}
+	.dtp-buttons { display: none; }
+}
+
 @media (min-width: $breakpoint-desktop) {
 	.carousel-control { padding: 40px; font-size: 50px; }
 }

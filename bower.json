@@ -21,6 +21,12 @@
     "tether": null,
     "jquery-validation": null,
     "moment": null,
-    "handlebars": null
+    "handlebars": null,
+    "bootstrap-material-datetimepicker": null,
+    "bootstrap-sass": "^3.3.7"
+  },
+  "resolutions": {
+    "jquery": "3.2.1",
+    "bootstrap": "v4.0.0-alpha.6"
   }
 }
