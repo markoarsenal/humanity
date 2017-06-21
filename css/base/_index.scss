@@ -3,7 +3,6 @@ body {
 	padding: 50px 5%;
 	font-family: 'Roboto', sans-serif;
 }
-a, a:hover, a:focus, a:active { text-decoration: none; }
 img { max-width: 100%; }
 input[type="radio"] { -webkit-appearance: radio; }
 .btn:active, .btn.active, .btn:focus, .btn.focus,
@@ -11,3 +10,5 @@ input[type="radio"] { -webkit-appearance: radio; }
 	outline: none;
 	box-shadow: none;
 }
+.error { color: $red; }
+.form-control.error { border-color: $red; }

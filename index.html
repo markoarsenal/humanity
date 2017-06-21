@@ -14,36 +14,92 @@
 </head>
 <body>
 	<main class="main-container">
-		<div class="p-table js-table"></div>
+		<div class="p-table js-table">
+			<div class="filter-and-pagination row">
+				<div class="col-4">
+					<input type="text" class="form-control js-table-filter" placeholder="Filter table...">
+				</div>
+				<div class="col-8">
+					<nav class="pagination-nav">
+						<ul class="pagination">
+							<li class="page-item">
+								<a class="page-link js-pagination-btn js-pagination-prev" href="#"><span class="icon-arrow-left"></span> Prev week</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link js-pagination-btn js-pagination-next" href="#">Next week <span class="icon-arrow-right"></span></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div class="js-table-container"></div>
+		</div>
 	</main>
 
 	<script class="js-table-template" type="text/x-handlebars-template">
 		<table class="table table-striped table-bordered table-sm">
 			<thead>
 				<tr>
-					<th>{{interval}}</th>
+					<th class="table-cell">{{interval}}</th>
 					{{#each days}}
-					<th class="{{todayClass}}">{{date}}</th>
+					<th class="table-cell {{todayClass}}">{{date}}</th>
 					{{/each}}
 				</tr>
 			</thead>
 			<tbody>
 				{{#each employees}}
 				<tr>
-					<td><span class="icon-user user-icon"></span> {{this}}</td>
+					<td class="table-cell">
+						<a href="#" class="employee js-employee" data-id="{{@key}}">
+							<span class="icon-user user-icon"></span> {{firstName}} {{lastName}}
+						</a>
+					</td>
 					{{#each ../days}}
-					<td class="{{todayClass}}"></td>
+					<td class="table-cell table-cell-add {{todayClass}}"></td>
 					{{/each}}
 				</tr>
 				{{/each}}
 				<tr>
 					<td colspan="8">
-						<button class="btn btn-primary btn-block btn-sm">Add new employee <span class="btn-icon icon-plus"></span></button>
+						<button class="btn btn-primary btn-block btn-sm js-new-employee-btn">Add new employee <span class="btn-icon icon-plus"></span></button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</script>
+
+	<!-- Employee modal -->
+	<div class="modal js-employee-modal">
+		<form class="modal-dialog js-form js-form-container" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Employee</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="id" value="-1" />
+					<div class="form-group">
+						<label class="form-control-label" for="firstName">First name *</label>
+						<input type="text" name="firstName" class="form-control js-submit-with-enter" id="firstName" required />
+					</div>
+					<div class="form-group">
+						<label class="form-control-label" for="lastName">Last name *</label>
+						<input type="text" name="lastName" class="form-control js-submit-with-enter" id="lastName" required />
+					</div>
+					<div class="form-group">
+						<label class="form-control-label" for="position">Position</label>
+						<input type="text" name="position" class="form-control js-submit-with-enter" id="position" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger js-delete-btn" data-dismiss="modal">Delete</button>
+					<button type="button" class="btn btn-primary js-save-btn js-submit-btn">Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
 
 	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-database.js"></script>

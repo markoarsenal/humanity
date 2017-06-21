@@ -8,5 +8,15 @@
 	tr {
 		td.today-cell { background-color: rgba($brand-primary, 0.2); }
 		&:nth-of-type(odd) td.today-cell { background-color: rgba($brand-primary, 0.4); }
+		.table-cell-add, &:nth-of-type(odd) .table-cell-add {
+			cursor: pointer;
+			transition: background-color 0.1s;
+			&:hover { background-color: $brand-secondary; }
+		}
+	}
+	.employee { display: block; }
+	.filter-and-pagination {
+		margin-bottom: 10px;
+		.pagination-nav { float: right; }
 	}
 }

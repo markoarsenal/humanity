@@ -210,6 +210,17 @@ APP.helpers = (function () {
 		},
 
 		/**
+		 * Populate data into form
+		 * @param  { Object } 	data 	Data to populate
+		 * @return { void }
+		 */
+		populateData: function ($form, data) {
+			for (var i in data) {
+				$form.find('[name=' + i + ']').val(data[i]);
+			}
+		},
+
+		/**
 		 * Calculate height of absolute or fixed positioned elements
 		 * @return { Number } 	Height
 		 */

@@ -80,17 +80,12 @@
 
 // Colors
 $brand-primary: #41a3cc;
+$brand-secondary: #63e6be;
+$red: #ec1e1e;
 
 // Z-indexes
 $z-indexes: (
 	loader: 9999
-);
-
-$container-max-widths: (
-	sm: 100%,
-	md: 100%,
-	lg: 1200px,
-	xl: 1440px
 );
 
 // Breakpoints
@@ -113,4 +108,16 @@ $grid-breakpoints: (
 	md: $breakpoint-tablet,
 	lg: $breakpoint-laptop,
 	xl: $breakpoint-desktop
+);
+
+// Bootstraps vars
+$input-border-radius: 0;
+$input-border-radius-lg: 0;
+$input-border-radius-sm: 0;
+
+$container-max-widths: (
+	sm: 100%,
+	md: 100%,
+	lg: 1200px,
+	xl: 1440px
 );

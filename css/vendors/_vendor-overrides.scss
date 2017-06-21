@@ -11,6 +11,18 @@ button:focus { outline: none; }
 	font-size: 40px;
 	&.left, &.right { background: none; }
 }
+.form-control { font-size: 14px; }
+.modal {
+	.modal-header, .modal-footer { background-color: #eee; }
+	.modal-title {
+		flex-grow: 1;
+		font-size: 18px;
+		text-align: center;
+	}
+	.modal-content { border: none; }
+	.btn-primary { margin-left: auto; }
+	label { font-size: 14px; margin-bottom: 0; }
+}
 
 @media (min-width: $breakpoint-desktop) {
 	.carousel-control { padding: 40px; font-size: 50px; }

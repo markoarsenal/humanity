@@ -8,11 +8,14 @@ var scripts = [
 	'./bower_components/bootstrap/dist/js/bootstrap.js',
 	'./bower_components/moment/moment.js',
 	'./bower_components/handlebars/handlebars.js',
+	'./bower_components/jquery-validation/dist/jquery.validate.js',
+	'./scripts/vendors/validation-methods.js',
 	'./scripts/utilities/utilities.js',
 	'./scripts/helpers/config.js',
 	'./scripts/helpers/helpers.js',
 	'./scripts/modules/firebase.js',
 	'./scripts/partials/table.js',
+	'./scripts/partials/employee.js',
 	'./scripts/main.js'
 ];
 
