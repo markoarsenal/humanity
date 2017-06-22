@@ -1,10 +1,12 @@
 .p-table {
+	margin-bottom: 40px;
 	font-size: 14px;
 	th {
 		text-align: center;
 		color: #fff;
 		background-color: $brand-primary;
 	}
+	th, td { vertical-align: middle; }
 	tr {
 		td.today-cell { background-color: rgba($brand-primary, 0.2); }
 		&:nth-of-type(odd) td.today-cell { background-color: rgba($brand-primary, 0.4); }
@@ -18,5 +20,12 @@
 	.filter-and-pagination {
 		margin-bottom: 10px;
 		.pagination-nav { float: right; }
+	}
+	.shift {
+		padding: 5px 10px;
+		font-size: 12px;
+		background-color: $brand-secondary;
+		border: 1px solid darken($brand-secondary, 20%);
+		border-left: 3px solid darken($brand-secondary, 20%);
 	}
 }

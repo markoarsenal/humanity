@@ -5,7 +5,7 @@ var APP = APP || {};
 
 
 APP.table = (function () {
-	var self = {
+	let self = {
 		defaults: {},
 		instance: {}
 	}
@@ -61,25 +61,51 @@ APP.table = (function () {
 
 		/**
 		 * Prepare data for table rendering
-		 * @return { Object }	Formated data
+		 * @param { Function} 	callback 	Callback function to be called on data ready
+		 * @return { void }
 		 */
-		_prepareData () {
+		_prepareData (callback) {
 			let startDate = this.state.startDate;
 			let data = $.extend(true, {}, this.state, {
 				interval: startDate.format('MMM DD, YYYY') + ' - ' + startDate.clone().add(6, 'days').format('MMM DD, YYYY'),
 				days: []
 			});			
 
-			for (var i = 0; i < 7; i++) {
-				let newDate = startDate.clone().add(i, 'days');
+			// Add shifts
+			APP.firebase.get(APP.CONFIG.URLS.shifts, (shifts) => {
+				// Empty days for every employee
+				for (let e in data.employees) {
+					data.employees[e].days = [];
+				}
+				
+				for (let i = 0; i < 7; i++) {
+					let newDate = startDate.clone().add(i, 'days'),
+						day = newDate.format('MMM DD, YYYY');
 
-				data.days.push({
-					date: newDate.format('ddd, MMM DD'),
-					todayClass: newDate.format('DD MM YYYY') === moment().format('DD MM YYYY') ? 'today-cell' : ''
-				});
-			}
+					data.days.push({
+						date: newDate.format('ddd, MMM DD'),
+					});
 
-			return data;
+					// Create days for every employee
+					for (let e in data.employees) {
+						let employee = data.employees[e],
+							key = e + ':' + day,
+							hasShift = shifts && shifts[key] ? true : false;
+						
+						employee['days'].push({
+							day: day,
+							todayClass: newDate.format('DD MM YYYY') === moment().format('DD MM YYYY') ? 'today-cell' : '',
+							hasShift: hasShift,
+							shift: shifts && shifts[key],
+							shiftKey: key
+						});
+					}
+
+					this.state.employees = data.employees;
+				}
+
+				typeof callback === 'function' ? callback(data) : null;
+			});
 		}
 
 		/**
@@ -87,8 +113,9 @@ APP.table = (function () {
 		 * @return { void }
 		 */
 		renderTable () {
-			let data = this._prepareData();
-			this.DOM.$tableContainer.html(this.template(data));
+			this._prepareData((data) => {
+				this.DOM.$tableContainer.html(this.template(data));
+			});
 		}
 
 		/**
@@ -100,7 +127,7 @@ APP.table = (function () {
 
 			// Filter
 			that.DOM.$filter.on('keyup.ats cut.ats paste.ats', function (e) {
-				var $this = $(this),
+				let $this = $(this),
 					filter = $this.val().toLowerCase();
 
 				// Reset to original state
@@ -163,7 +190,7 @@ APP.table = (function () {
 				});
 			});
 
-			// Employee saved
+			// Employee changed
 			$(document).on('employee-saved employee-deleted', function () {
 				// Get employees
 				that.getEmployees((employees) => {
@@ -173,9 +200,33 @@ APP.table = (function () {
 				});
 			});
 
+			// Shift changed
+			$(document).on('shift-saved shift-deleted', function (e, shift) {
+				that.renderTable();
+			});
+
 			// Add shift
 			that.$element.on('click', '.js-table-cell-add', function () {
-				APP.shift.instance.showModal();
+				let $this = $(this),
+					employee = $this.data('employee'),
+					date = $this.data('date');
+
+				APP.shift.instance.showModal({
+					id: employee + ':' + date
+				});
+			});
+
+			// Edit shift
+			that.$element.on('click', '.js-shift', function (e) {
+				e.stopPropagation();
+
+				let id = $(this).data('id');
+
+				// Get shift data
+				APP.firebase.get(APP.CONFIG.URLS.shifts + '/' + id, function (shift) {
+					shift.id = id;
+					APP.shift.instance.showModal(shift);
+				});
 			});
 		}
 	}
@@ -187,12 +238,12 @@ APP.table = (function () {
 	 * @return 	{ Array } 					Array of istances	
 	 */
 	self.init = function (selector, options) {
-		var $elements = $(selector),
+		let $elements = $(selector),
 			results = [];
 
 		// Add modul methods to every element
 		$elements.each(function(index, el) {
-			var $this = $(this),
+			let $this = $(this),
 				table = $this.data('table');
 
 			if (!table) {

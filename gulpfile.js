@@ -10,7 +10,9 @@ var scripts = [
 	'./bower_components/handlebars/handlebars.js',
 	'./bower_components/jquery-validation/dist/jquery.validate.js',
 	'./bower_components/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js',
+	'./bower_components/select2/dist/js/select2.full.js',
 	'./scripts/vendors/validation-methods.js',
+	'./scripts/vendors/jpicker/jpicker-1.1.6.js',
 	'./scripts/utilities/utilities.js',
 	'./scripts/helpers/config.js',
 	'./scripts/helpers/helpers.js',
@@ -18,6 +20,8 @@ var scripts = [
 	'./scripts/partials/table.js',
 	'./scripts/partials/employee.js',
 	'./scripts/partials/shift.js',
+	'./scripts/partials/position-list.js',
+	'./scripts/partials/position.js',
 	'./scripts/main.js'
 ];
 

@@ -35,8 +35,14 @@
 			</div>
 			<div class="js-table-container"></div>
 		</div>
+		<div class="p-position-list js-position-list">
+			<h5>Positions:</h5>
+			<div class="js-list-container"></div>
+			<button type="button" class="btn btn-primary js-add-new-btn">Add new position <span class="btn-icon icon-plus"></span></button>
+		</div>
 	</main>
 
+	<!-- Table template -->
 	<script class="js-table-template" type="text/x-handlebars-template">
 		<table class="table table-striped table-bordered table-sm">
 			<thead>
@@ -55,8 +61,12 @@
 							<span class="icon-user user-icon"></span> {{firstName}} {{lastName}}
 						</a>
 					</td>
-					{{#each ../days}}
-					<td class="table-cell table-cell-add js-table-cell-add {{todayClass}}"></td>
+					{{#each days}}
+					<td class="table-cell table-cell-add js-table-cell-add {{todayClass}}" data-employee="{{@../key}}" data-date="{{day}}">
+						{{#if hasShift}}
+						<div class="shift js-shift" data-id="{{shiftKey}}">{{shift.name}}</div>
+						{{/if}}						
+					</td>
 					{{/each}}
 				</tr>
 				{{/each}}
@@ -67,6 +77,20 @@
 				</tr>
 			</tbody>
 		</table>
+	</script>
+
+	<!-- Positions template -->
+	<script class="js-positions-template" type="text/x-handlebars-template">
+		<ul class="items-list">
+			{{#each this}}
+			<li>
+				<a href="#" class="c-position-item js-position" data-id="{{@key}}">
+					<span class="color-placeholder" style="background-color: #{{color}}"></span>
+					{{name}}
+				</a>
+			</li>
+			{{/each}}
+		</ul>
 	</script>
 
 	<!-- Shift modal -->
@@ -80,7 +104,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<input type="hidden" name="id" value="-1" />
+					<input type="text" name="id" value="-1" class="hide-element" />
 					<div class="form-group">
 						<label class="form-control-label" for="name">Name *</label>
 						<input type="text" name="name" class="form-control js-submit-with-enter" id="name" required />
@@ -95,11 +119,40 @@
 					</div>
 					<div class="form-group">
 						<label class="form-control-label" for="position">Position</label>
-						<input type="text" name="position" class="form-control js-submit-with-enter" id="position" />
+						<select name="position" class="form-control js-positions" id="position" style="width: 100%"></select>
 					</div>
 					<div class="form-group">
 						<label class="form-control-label" for="employees">Employees</label>
-						<input type="text" name="employees" class="form-control js-submit-with-enter" id="employees" />
+						<select name="employees" class="form-control js-employees" multiple id="employees" style="width: 100%"></select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger js-delete-btn" data-dismiss="modal">Delete</button>
+					<button type="button" class="btn btn-primary js-save-btn js-submit-btn">Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- Position modal -->
+	<div class="modal js-position-modal">
+		<form class="modal-dialog js-form js-form-container" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Position <span class="icon-move-up position-icon"></span></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="text" name="id" value="-1" class="hide-element" />
+					<div class="form-group">
+						<label class="form-control-label" for="name">Name *</label>
+						<input type="text" name="name" class="form-control js-submit-with-enter" id="name" required />
+					</div>
+					<div class="form-group">
+						<label class="form-control-label">Color</label>
+						<input type="hidden" name="color" value="-1" class="js-colorpicker" />
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -121,7 +174,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<input type="hidden" name="id" value="-1" />
+					<input type="text" name="id" value="-1" class="hide-element" />
 					<div class="form-group">
 						<label class="form-control-label" for="firstName">First name *</label>
 						<input type="text" name="firstName" class="form-control js-submit-with-enter" id="firstName" required />
@@ -132,7 +185,7 @@
 					</div>
 					<div class="form-group">
 						<label class="form-control-label" for="position">Position</label>
-						<input type="text" name="position" class="form-control js-submit-with-enter" id="position" />
+						<select name="position" class="form-control js-positions" id="position" style="width: 100%"></select>
 					</div>
 				</div>
 				<div class="modal-footer">

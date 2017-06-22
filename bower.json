@@ -23,7 +23,7 @@
     "moment": null,
     "handlebars": null,
     "bootstrap-material-datetimepicker": null,
-    "bootstrap-sass": "^3.3.7"
+    "select2": null
   },
   "resolutions": {
     "jquery": "3.2.1",

@@ -7,7 +7,9 @@ var APP = APP || {};
 APP.CONFIG = (function () {
 	return {
 		URLS: {
-			employees: '/employees'
+			employees: '/employees',
+			positions: '/positions',
+			shifts: '/shifts'
 		}
 	}
 }());

@@ -4,13 +4,13 @@
 var APP = APP || {};
 
 
-APP.employee = (function () {
+APP.position = (function () {
 	var self = {
 		defaults: {},
 		instance: {}
 	}
 
-	class Employee {
+	class Position {
 		/**
 		 * Constructor function
 		 * @param { Jquery } 	$element 	Module element
@@ -20,11 +20,9 @@ APP.employee = (function () {
 			this.$element = $element;
 			this.options = $.extend(true, {}, self.defaults, options);
 
-			this.state = {};
-
 			this.DOM = {
 				$form: $element.find('.js-form'),
-				$positions: $element.find('.js-positions'),
+				$colorpicker: $element.find('.js-colorpicker'),
 				$saveBtn: $element.find('.js-save-btn'),
 				$deleteBtn: $element.find('.js-delete-btn')
 			}
@@ -32,8 +30,7 @@ APP.employee = (function () {
 			// Validate form
 			this.validator = this.DOM.$form.validate({
 				rules: {
-					firstName: { alpha: true },
-					lastName: { alpha: true }
+					name: { alpha: true }
 				}
 			});
 
@@ -42,17 +39,18 @@ APP.employee = (function () {
 		}
 
 		/**
-		 * Show employee modal
+		 * Show position modal
 		 * @param  { Object } 	data 	Employee data
 		 * @return { void }
 		 */
 		showModal (data) {
-			this.state = data;
-
 			APP.helpers.populateData(this.DOM.$form, data);
-			// Set active position
-			if (data && data.position) {
-				this.DOM.$positions.val(data.position).trigger('change');
+
+			// Set color
+			if (data && data.color) {
+				$.jPicker.List[0].color.active.val('hex', data.color);
+			} else {
+				$.jPicker.List[0].color.active.val('hex', '000000');
 			}
 
 			// Delete btn
@@ -66,7 +64,7 @@ APP.employee = (function () {
 		}
 
 		/**
-		 * Hide employee modal
+		 * Hide position modal
 		 * @return { void }
 		 */
 		hideModal () {
@@ -80,42 +78,6 @@ APP.employee = (function () {
 		resetForm () {
 			this.validator.resetForm();
 			this.DOM.$form[0].reset();
-
-			// Reset positions
-			this.DOM.$positions.val(null).trigger('change');
-		}
-
-		/**
-		 * Positions dropdown
-		 * @return { void }
-		 */
-		_initPositions () {
-			APP.positionList.instance.getPositions((positions) => {
-				let data = [];
-
-				for (let i in positions) {
-					data.push({
-						id: i,
-						color: positions[i].color,
-						text: positions[i].name
-					});
-				}
-				
-				this.DOM.$positions.select2({
-					placeholder: 'Select a position',
-					data: data,
-					templateResult: function (state) {
-						if (!state.id) { return state.text; }
-
-						let $state = $('<div class="c-position-item js-position" data-id="' + state.id + '">\
-											<span class="color-placeholder" style="background-color: #' + state.color + '"></span>\
-											' + state.text + '\
-										</div>');
-
-						return $state;
-					}
-				}).val(null).trigger('change');
-			});
 		}
 
 		/**
@@ -123,8 +85,25 @@ APP.employee = (function () {
 		 * @return { void }
 		 */
 		_initModules () {
-			// Positions
-			this._initPositions();
+			this.jpicker = this.DOM.$colorpicker.jPicker({
+				window: {
+					expandable: true,
+					position: {
+						x: 'center',
+						y: 'center'
+					},
+					effects: {
+						type: 'show',
+						speed: {
+							show: 0,
+							hide: 0
+						}
+					}
+				},
+				images: {
+				    clientPath: '/images/jpicker/'
+				}
+			});
 		}
 
 		/**
@@ -133,7 +112,7 @@ APP.employee = (function () {
 		_initEvents () {
 			let that = this;
 
-			// Save employee
+			// Save position
 			that.DOM.$saveBtn.on('click', function () {
 				if (that.DOM.$form.valid()) {
 					let data = that.DOM.$form.serializeObject(),
@@ -142,37 +121,30 @@ APP.employee = (function () {
 					delete data.id;
 
 					if (id == -1) {
-						// Add employee
-						APP.firebase.add(APP.CONFIG.URLS.employees, data, function (employee) {
+						// Add position
+						APP.firebase.add(APP.CONFIG.URLS.positions, data, function (position) {
 							that.hideModal();
-							that.$element.trigger('employee-saved', employee);
+							that.$element.trigger('position-saved', position);
 						});
 					} else {
-						// Update employee
-						APP.firebase.update(APP.CONFIG.URLS.employees + '/' + id, data, function (employee) {
+						// Update position
+						APP.firebase.update(APP.CONFIG.URLS.positions + '/' + id, data, function (position) {
 							that.hideModal();
-							that.$element.trigger('employee-saved', employee);
+							that.$element.trigger('position-saved', position);
 						});
 					}
 				}
 			});
 
-			// Delete employee
+			// Delete position
 			that.DOM.$deleteBtn.on('click', function () {
 				let data = that.DOM.$form.serializeObject(),
 					id = data.id;
 
-				APP.firebase.delete(APP.CONFIG.URLS.employees + '/' + id, function (employee) {
+				APP.firebase.delete(APP.CONFIG.URLS.positions + '/' + id, function (position) {
 					that.hideModal();
-					that.$element.trigger('employee-deleted', employee);
+					that.$element.trigger('position-deleted', position);
 				});
-			});
-
-			// Position changed, reinit dropdown
-			$(document).on('position-saved position-deleted', function () {
-				that.DOM.$positions.select2('destroy');
-				that.DOM.$positions.html('');
-				that._initPositions();
 			});
 
 			// Hide modal
@@ -195,15 +167,15 @@ APP.employee = (function () {
 		// Add modul methods to every element
 		$elements.each(function(index, el) {
 			var $this = $(this),
-				employee = $this.data('employee');
+				position = $this.data('position');
 
-			if (!employee) {
-				employee = new Employee ($this, options);
-				self.instance = employee;
-				$this.data('employee', employee);
+			if (!position) {
+				position = new Position ($this, options);
+				self.instance = position;
+				$this.data('position', position);
 			}
 			
-			results.push(employee);
+			results.push(position);
 		});
 
 		return results;

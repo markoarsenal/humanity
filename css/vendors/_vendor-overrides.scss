@@ -83,6 +83,56 @@ button:focus { outline: none; }
 	.dtp-buttons { display: none; }
 }
 
-@media (min-width: $breakpoint-desktop) {
-	.carousel-control { padding: 40px; font-size: 50px; }
+// Select 2
+.select2-container {
+	display: block;
+	width: 100%;
+	.select2-selection {
+		@extend .form-control;
+		height: 34px;
+	}
+	.select2-selection--single {
+		.select2-selection__rendered { padding-left: 0; line-height: initial; }
+		.select2-selection__arrow { height: 34px; }
+	}
+	&.select2-container--focus .select2-selection--multiple { border-color: $brand-primary; }
+	.select2-selection--multiple {
+		height: auto;
+		min-height: 34px;
+		padding: 0 12px;
+		.select2-selection__rendered { padding: 0; }
+		.select2-selection__choice {
+			margin-top: 4px;
+			line-height: 1.5;
+			color: #fff;
+			background-color: $brand-secondary;
+			border-color: darken($brand-secondary, 20%);
+			border-radius: 3px;
+		}
+		.select2-selection__choice__remove { color: #666; margin-right: 5px; }
+	}
+}
+.select2-dropdown {
+	border: 1px solid #ccc;
+	border-radius: 0;
+	box-shadow: 0 0 4px rgba(#000, 0.2);
+	.select2-results__option {
+		padding: 6px 12px;
+		font-size: 14px;
+	}
+	.select2-results__option--highlighted[aria-selected] { background-color: $brand-primary; }
+}
+
+// Jpicker
+.jPicker.Container {
+	position: fixed !important;
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate(-50%, -50%) !important;
+	z-index: map-get($z-indexes, colorpicker) !important;
+	table.jPicker {
+		border: none;
+		td { vertical-align: top; }
+		tbody tr:first-of-type { display: none; }
+	}
 }
